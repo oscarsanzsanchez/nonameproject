@@ -1,0 +1,25 @@
+{
+   "name": "default",
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "root",
+   "password": "",
+   "database": "nonameproject",
+   "synchronize": false,
+   "logging": false,
+   "entities": [
+      "build/src/database/models/**/*.js"
+   ],
+   "migrations": [
+      "build/database/migration/**/*.js"
+   ],
+   "subscribers": [
+      "build/database/subscriber/**/*.js"
+   ],
+   "cli": {
+      "entitiesDir": "src/database/models/",
+      "migrationsDir": "src/database/migration",
+      "subscribersDir": "src/database/subscriber"
+   }
+}
