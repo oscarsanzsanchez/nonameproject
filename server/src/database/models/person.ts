@@ -3,8 +3,10 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
+import Payment from "./payments";
 import Service from "./service";
 
 @Entity("people")
@@ -21,9 +23,12 @@ class Person {
   @Column()
   fee!: number;
 
-  @ManyToMany(type => Service, service => service.people)
-  @JoinTable({ name: "peopleservices"})
+  @ManyToMany(type => Service, service => service.people, { eager: true })
+  @JoinTable({ name: "peopleservices" })
   services!: Service[];
+
+  @OneToMany(type => Payment, payment => payment.person)
+  payments!: Payment[];
 }
 
 export default Person;

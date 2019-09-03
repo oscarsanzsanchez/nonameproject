@@ -1,10 +1,11 @@
 import colors from "colors";
+import * as bodyParser from "body-parser";
 import cors from "cors";
 import express, { Application } from "express";
 import morgan from "morgan";
 import { Connection, createConnection, getRepository } from "typeorm";
 import Person from "./database/models/person";
-import Service from "./database/models/service";
+import routing from "./routes/apiRoute";
 
 class Server {
   public app: Application;
@@ -27,11 +28,13 @@ class Server {
     this.app.set("port", process.env.PORT || this.port);
     this.app.use(morgan("dev"));
     this.app.use(cors());
-    this.app.use(express.json());
+    this.app.use(bodyParser.json());
     this.app.use(express.urlencoded({ extended: false }));
   }
 
-  private routes(): void {}
+  private routes(): void {
+    this.app.use("/api", routing);
+  }
 
   public start(): void {
     this.app.listen(this.app.get("port"), () => {
@@ -53,7 +56,7 @@ class Server {
     } else {
       console.log("Connected successfully to database".black.bgWhite);
       this.connection = connection;
-      this.pruebas();
+      // this.pruebas();
     }
   }
 
@@ -63,11 +66,10 @@ class Server {
       const rp = getRepository(Person);
       console.log("empieza2");
       const resultado = await rp.find({
-        relations: ["services"]
+        //relations: ["person"]
       });
       console.log(resultado);
-      console.log(resultado[0].services);
-      
+      //console.log(resultado[0].person);
     } catch (error) {
       console.log(error);
     }
