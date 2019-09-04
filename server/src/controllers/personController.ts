@@ -19,18 +19,24 @@ class PersonController {
   };
 
   static newPerson = async (req: Request, res: Response) => {
-    let { name, surname, fee } = req.body;
+    console.log(req.body);
+    let { name, surname, fee, services } = req.body;
     let person = new Person();
     person.name = name;
     person.surname = surname;
     person.fee = fee;
+    person.services = services;
 
     try {
       await getRepository(Person).save(person);
       res
         .status(201)
         .send({ message: "Person created succesfully", person: person });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      
+      return;
+    }
   };
 
   static updatePerson = async (req: Request, res: Response) => {

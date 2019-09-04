@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/']">NoAppProject</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+      aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ml-1">
+          <a class="btn btn-outline-info btn-sm btn-block" [routerLink]="['people/new']">Register new person</a>
+        </li>
+        <li class="nav-item ml-1 ">
+          <a class="btn btn-warning btn-sm btn-block" [routerLink]="['services/new']">Register new service</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['about']" routerLinkActive="active">About</a>
+        </li>
+        <li class="nav-item ml-1">
+          <a class="nav-link btn btn-outline-primary" [routerLink]="['contact']" routerLinkActive="active">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

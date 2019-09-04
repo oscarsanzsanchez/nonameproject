@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, getManager } from "typeorm";
 import Service from "../database/models/service";
 
 class ServiceController {
@@ -16,6 +16,17 @@ class ServiceController {
       const service: Service = await getRepository(Service).findOneOrFail(id);
       res.send(service);
     } catch (error) {}
+  };
+
+  static countPersons = async (req: Request, res: Response) => {
+    try {
+      //SELECT servicesId, count(peopleId) FROM peopleservices GROUP BY servicesId;
+      const result = await getManager().query(`SELECT servicesId as serviceId, count(peopleId) as numPersons FROM peopleservices GROUP BY servicesId`);
+
+      res.send(result);
+    } catch (error) {
+      res.send({message: "Cannot retreive information."})
+    }
   };
 
   static newService = async (req: Request, res: Response) => {

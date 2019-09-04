@@ -4,6 +4,7 @@ const router = Router();
 
 router.get("/", controller.listAll);
 router.get("/:id", controller.listOne);
+router.get("/countpeople/all", controller.countPersons);
 router.post("/new", controller.newService);
 router.put("/:id", controller.updateService);
 router.delete("/:id", controller.deleteService);

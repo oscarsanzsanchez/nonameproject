@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-5" *ngIf="vacio">
+    <div class="alert alert-info" role="alert">
+      <strong>
+        <h2>What if we try to...</h2>
+      </strong>
+      <ul class="list-unstyled ml-3">
+        <li>
+          <h3><b>First: <a [routerLink]="['/services/new']" class="text-primary">create a service</a></b></h3>
+        </li>
+        <li>
+          <h3><b>And then <a [routerLink]="['/people/new']" class="text-primary">register a person!</a></b></h3>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="!vacio" class="container row">
+    <div class="col-3" *ngFor="let person of people">
+      <div class="card border-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header">{{person.name}} {{person.surname}} <span
+            class="badge badge-warning">{{ person.fee | currency:'EUR' }} / month</span></div>
+        <div class="card-body">
+          <h4 class="card-title"></h4>
+          <div class="card-text mb-3">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let service of person.services">
+                {{service.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-info btn-block">Edit</button>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-outline-danger btn-block">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

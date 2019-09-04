@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-3">
+      <form method="post">
+        <div class="row">
+          <div class="col-12 text-center">
+            <legend>Let's register a new person!</legend>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" name="name" [(ngModel)]="person.name" placeholder="Person name" class="form-control"
+            autofocus>
+        </div>
+        <div class="form-group">
+          <input type="text" name="surname" [(ngModel)]="person.surname" placeholder="Person surname"
+            class="form-control" autofocus>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox" *ngFor="let service of servicesCheck">
+            <input type="checkbox" class="custom-control-input" id="{{service.name}}" name="{{service.name}}"
+              [(ngModel)]="service.checked" [checked]="service.checked" (click)="checkTotal(service)">
+            <label class="custom-control-label" for="{{service.name}}">{{service.name}}</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Monthly fee</label>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">€</span>
+              </div>
+              <input type="text" class="form-control" value="{{person.fee}}" [(ngModel)]="person.fee" name="fee">
+              <!--  <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <button class="btn btn-info btn-block" (click)="sendForm()">Save</button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-outline-warning btn-block" (click)="resetForm()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

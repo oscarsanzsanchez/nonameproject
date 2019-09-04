@@ -23,7 +23,7 @@ class Person {
   @Column()
   fee!: number;
 
-  @ManyToMany(type => Service, service => service.people, { eager: true })
+  @ManyToMany(type => Service, {eager:true})
   @JoinTable({ name: "peopleservices" })
   services!: Service[];
 

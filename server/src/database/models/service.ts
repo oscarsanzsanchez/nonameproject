@@ -12,8 +12,6 @@ class Service {
   @Column()
   price!: number;
 
-  @ManyToMany(type => Person, person => person.services)
-  people!: Person[];
 }
 
 export default Service;
