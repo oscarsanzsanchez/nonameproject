@@ -3,10 +3,23 @@ import { getRepository, getManager } from "typeorm";
 import Service from "../database/models/service";
 
 class ServiceController {
+  /**
+   * REST METHODS
+   */
+
   static listAll = async (req: Request, res: Response) => {
     try {
-      const service: Service[] = await getRepository(Service).find();
-      res.send(service);
+      const services: Service[] = await getRepository(Service).find();
+
+      for (const service of services) {
+        await ServiceController.calculatePricePerPerson(service.id).then(
+          res => {
+            service.pricePerPerson = res;
+          }
+        );
+      }
+
+      res.send(services);
     } catch (error) {}
   };
 
@@ -16,17 +29,6 @@ class ServiceController {
       const service: Service = await getRepository(Service).findOneOrFail(id);
       res.send(service);
     } catch (error) {}
-  };
-
-  static countPersons = async (req: Request, res: Response) => {
-    try {
-      //SELECT servicesId, count(peopleId) FROM peopleservices GROUP BY servicesId;
-      const result = await getManager().query(`SELECT servicesId as serviceId, count(peopleId) as numPersons FROM peopleservices GROUP BY servicesId`);
-
-      res.send(result);
-    } catch (error) {
-      res.send({message: "Cannot retreive information."})
-    }
   };
 
   static newService = async (req: Request, res: Response) => {
@@ -57,7 +59,7 @@ class ServiceController {
 
     let { name, price } = req.body;
     serviceToUpdate.name = name;
-    serviceToUpdate.price = price
+    serviceToUpdate.price = price;
 
     try {
       await getRepository(Service).save(serviceToUpdate);
@@ -79,6 +81,62 @@ class ServiceController {
     } catch (error) {
       res.status(500).send({ message: "Ups... Try again later" });
     }
+  };
+
+  static getCountAllPersons = async (req: Request, res: Response) => {
+    try {
+      res.status(201).send(await ServiceController.countAllPersons());
+    } catch (error) {}
+  };
+
+  static getCountPersonsWithService = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      res
+        .status(201)
+        .send(
+          await ServiceController.countAllPersonsWithService(
+            Number.parseInt(id)
+          )
+        );
+    } catch (error) {}
+  };
+
+  /**
+   * METHODS
+   */
+  static calculatePricePerPerson = async (id: number) => {
+    let pricePerPerson!: number;
+    let numPersons!: number;
+    let price!: number;
+
+    await getRepository(Service)
+      .findOneOrFail(id)
+      .then((res: Service) => (price = res.price));
+
+    await ServiceController.countAllPersonsWithService(id).then(
+      res => (numPersons = Number.parseInt(res[0].count))
+    );
+
+    if (numPersons === 0) {
+      numPersons = 1;
+    }
+
+    return (pricePerPerson = price / numPersons);
+  };
+
+  static countAllPersons = async () => {
+    // Get the count of people who contracted a determinated service.
+    return await getManager().query(
+      `SELECT S.id, count(distinct peopleId) as count FROM peopleservices PS right JOIN services S ON PS.servicesId = S.id GROUP BY S.id`
+    );
+  };
+
+  static countAllPersonsWithService = async (id: number) => {
+    // Get the count of people who contracted a determinated service.
+    return await getManager().query(
+      `SELECT servicesId, count(distinct peopleId) as count FROM peopleservices S WHERE S.servicesId = 1;`
+    );
   };
 }
 

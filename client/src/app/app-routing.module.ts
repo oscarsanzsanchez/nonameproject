@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ListPeopleComponent } from "./components/list-people/list-people.component";
-import { FormpeopleComponent } from './components/formpeople/formpeople.component';
-import { FormservicesComponent } from './components/formservices/formservices.component';
+import { FormpeopleComponent } from "./components/formpeople/formpeople.component";
+import { FormservicesComponent } from "./components/formservices/formservices.component";
 
 const routes: Routes = [
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: "services/new",
     component: FormservicesComponent
+  },
+  {
+    path: "people/:id",
+    component: FormpeopleComponent
   }
 ];
 

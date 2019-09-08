@@ -12,6 +12,9 @@ class Service {
   @Column()
   price!: number;
 
+  @Column()
+  pricePerPerson!: number;
+
 }
 
 export default Service;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import Service from "src/app/models/service";
 import { ServicesService } from "src/app/services/services.service";
-import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-formservices",
@@ -12,12 +12,13 @@ export class FormservicesComponent implements OnInit {
   service: Service = {
     id: 0,
     name: "",
-    price: 0
+    price: 0,
+    pricePerPerson: 0
   };
   constructor(
     private servicesService: ServicesService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {}
@@ -26,7 +27,8 @@ export class FormservicesComponent implements OnInit {
     this.service = {
       id: 0,
       name: "",
-      price: 0
+      price: 0,
+      pricePerPerson: 0
     };
   }
 

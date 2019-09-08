@@ -1,5 +1,8 @@
 <div class="row">
-  <div class="col-5" *ngIf="vacio">
+  <div class="col-12 mt-4 text-center" *ngIf="loading">
+      <i class="fas fa-spinner fa-7x fa-pulse"></i>
+  </div>
+  <div class="col-5" *ngIf="vacio && !loading">
     <div class="alert alert-info" role="alert">
       <strong>
         <h2>What if we try to...</h2>
@@ -9,12 +12,12 @@
           <h3><b>First: <a [routerLink]="['/services/new']" class="text-primary">create a service</a></b></h3>
         </li>
         <li>
-          <h3><b>And then <a [routerLink]="['/people/new']" class="text-primary">register a person!</a></b></h3>
+          <h3><b>And then <a [routerLink]="['new']" class="text-primary">register a person!</a></b></h3>
         </li>
       </ul>
     </div>
   </div>
-  <div *ngIf="!vacio" class="container row">
+  <div *ngIf="!vacio && !loading" class="container row">
     <div class="col-3" *ngFor="let person of people">
       <div class="card border-secondary mb-3" style="max-width: 20rem;">
         <div class="card-header">{{person.name}} {{person.surname}} <span
@@ -31,10 +34,10 @@
           </div>
           <div class="row">
             <div class="col-6">
-              <button class="btn btn-info btn-block">Edit</button>
+              <a class="btn btn-info btn-block" [routerLink]="['/people/', person.id]">Edit</a>
             </div>
             <div class="col-6">
-              <button class="btn btn-outline-danger btn-block">Delete</button>
+              <button class="btn btn-outline-danger btn-block" (click)="delete(person.id)">Delete</button>
             </div>
           </div>
         </div>
