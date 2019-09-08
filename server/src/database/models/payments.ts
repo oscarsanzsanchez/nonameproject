@@ -28,7 +28,7 @@ class Payment {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @ManyToOne(type => Person, person => person.payments, {eager: true})
+  @ManyToOne(type => Person, person => person.payments)
   person!: Person;
 }
 

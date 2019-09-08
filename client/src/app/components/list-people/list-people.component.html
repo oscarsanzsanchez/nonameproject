@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-12 mt-4 text-center" *ngIf="loading">
-      <i class="fas fa-spinner fa-7x fa-pulse"></i>
+    <i class="fas fa-spinner fa-7x fa-pulse"></i>
   </div>
   <div class="col-5" *ngIf="vacio && !loading">
     <div class="alert alert-info" role="alert">
@@ -18,10 +18,12 @@
     </div>
   </div>
   <div *ngIf="!vacio && !loading" class="container row">
-    <div class="col-3" *ngFor="let person of people">
+    <div class="col-lg-4 col-xs-12" *ngFor="let person of people">
       <div class="card border-secondary mb-3" style="max-width: 20rem;">
-        <div class="card-header">{{person.name}} {{person.surname}} <span
-            class="badge badge-warning">{{ person.fee | currency:'EUR' }} / month</span></div>
+        <div class="card-header d-flex justify-content-between">
+          <h5>{{person.name}} {{person.surname}} <span class="badge badge-warning">{{ person.fee | currency:'EUR' }} /
+              month</span></h5><button class="btn btn-outline-success btn-sm" [swal]="['Oops!', 'I\'m working hard for bringing you this toootally amazing feature! :)', 'warning']">View all payments</button>
+        </div>
         <div class="card-body">
           <h4 class="card-title"></h4>
           <div class="card-text mb-3">
@@ -32,6 +34,7 @@
               </li>
             </ul>
           </div>
+          <hr>
           <div class="row">
             <div class="col-6">
               <a class="btn btn-info btn-block" [routerLink]="['/people/', person.id]">Edit</a>

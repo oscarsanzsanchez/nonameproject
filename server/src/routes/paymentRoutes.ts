@@ -4,6 +4,7 @@ const router = Router();
 
 router.get("/", controller.listAll);
 router.get("/:id", controller.listOne);
+router.get("/person/:id", controller.listByPersonId);
 router.post("/new", controller.new);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);

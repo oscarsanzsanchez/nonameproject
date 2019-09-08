@@ -11,6 +11,7 @@ import { FormsModule } from "@angular/forms";
 import { PeopleService } from "./services/people.service";
 import { FormpeopleComponent } from "./components/formpeople/formpeople.component";
 import { FormservicesComponent } from './components/formservices/formservices.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { FormservicesComponent } from './components/formservices/formservices.co
     FormpeopleComponent,
     FormservicesComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot()],
   providers: [PeopleService],
   bootstrap: [AppComponent]
 })

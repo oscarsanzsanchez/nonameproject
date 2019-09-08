@@ -18,6 +18,20 @@ class PaymentController {
     } catch (error) {}
   };
 
+  static listByPersonId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const result = await getRepository(Payment).find({
+        where: [
+          {
+            person: id
+          }
+        ]
+      });
+      res.send(result);
+    } catch (error) {}
+  };
+
   static new = async (req: Request, res: Response) => {
     let { observation, active, person } = req.body;
 

@@ -14,6 +14,8 @@ class ServiceController {
       for (const service of services) {
         await ServiceController.calculatePricePerPerson(service.id).then(
           res => {
+            console.log(res);
+            
             service.pricePerPerson = res;
           }
         );
@@ -118,6 +120,8 @@ class ServiceController {
       res => (numPersons = Number.parseInt(res[0].count))
     );
 
+    console.log(numPersons);
+    
     if (numPersons === 0) {
       numPersons = 1;
     }
@@ -135,7 +139,7 @@ class ServiceController {
   static countAllPersonsWithService = async (id: number) => {
     // Get the count of people who contracted a determinated service.
     return await getManager().query(
-      `SELECT servicesId, count(distinct peopleId) as count FROM peopleservices S WHERE S.servicesId = 1;`
+      `SELECT servicesId, count(distinct peopleId) as count FROM peopleservices S WHERE S.servicesId = ${id};`
     );
   };
 }

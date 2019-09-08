@@ -1,4 +1,5 @@
 import Service from "./service";
+import { Payment } from "./payment";
 
 export default class Person {
   id!: number;
@@ -6,6 +7,7 @@ export default class Person {
   surname!: string;
   fee!: number;
   services!: Service[];
+  payments!: Payment[];
 
   constructor() {}
 }

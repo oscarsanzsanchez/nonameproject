@@ -72,11 +72,11 @@ export class FormpeopleComponent implements OnInit {
       if (!this.editMode) {
         serviceCheck.pricePerPerson =
           Math.round((serviceCheck.price / (numPersons + 1)) * 100) / 100;
-      } else if (
-        this.editMode &&
-        this.person.services.find(x => x.id === serviceCheck.id)
-      ) {
+      } else if (this.editMode && this.person.services.find(x => x.id === serviceCheck.id)) {
         serviceCheck.checked = true;
+      } else if (this.editMode && !this.person.services.find(x => x.id === serviceCheck.id)) {
+        serviceCheck.pricePerPerson =
+          Math.round((serviceCheck.price / (numPersons+1)) * 100) / 100;
       }
 
       this.servicesCheck.push(serviceCheck);

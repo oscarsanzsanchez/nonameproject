@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { PeopleService } from "src/app/services/people.service";
 import { Router } from "@angular/router";
+import { PaymentsService } from "src/app/services/payments.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-list-people",
@@ -10,9 +12,13 @@ import { Router } from "@angular/router";
 export class ListPeopleComponent implements OnInit {
   people: any = [];
   vacio: boolean = true;
-  loading:boolean = true;
+  loading: boolean = true;
 
-  constructor(private peopleService: PeopleService, private router: Router) {}
+  constructor(
+    private peopleService: PeopleService,
+    private paymentService: PaymentsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.init();
@@ -28,13 +34,32 @@ export class ListPeopleComponent implements OnInit {
       this.vacio = false;
       this.loading = false;
     }
-    
   }
 
   private async delete(id) {
-    this.loading = true;
-    await this.peopleService.delete(id).toPromise();
-    this.people = await this.peopleService.getAll().toPromise();
-    window.location.reload();
+    await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Let's drop that!",
+      cancelButtonText: "Keep it"
+    }).then(async result => {
+      if (result.value) {
+        this.peopleService
+          .delete(id)
+          .toPromise()
+          .then(res => {
+            Swal.fire(
+              "Deleted!",
+              "The person and all his data has been deleted.",
+              "success"
+            );
+          });
+        window.location.reload();
+      }
+    });
   }
 }

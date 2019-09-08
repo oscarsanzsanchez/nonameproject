@@ -27,7 +27,7 @@ class Person {
   @JoinTable({ name: "peopleservices" })
   services!: Service[];
 
-  @OneToMany(type => Payment, payment => payment.person)
+  @OneToMany(type => Payment, payment => payment.person, {eager: true})
   payments!: Payment[];
 }
 

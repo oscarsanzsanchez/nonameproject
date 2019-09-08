@@ -60,7 +60,7 @@ class PersonController {
 
     try {
       await getRepository(Person).save(personToUpdate);
-      PersonController.updateAllFees().then(res => console.log("todo ok"));
+      PersonController.updateAllFees();
       res.status(204).send();
     } catch (error) {
       return;
@@ -84,7 +84,6 @@ class PersonController {
    * METHODS
    */
 
-   
   static getServicesOfAPerson = async (idPerson: number) => {
     // Get the count of people who contracted a determinated service.
 
