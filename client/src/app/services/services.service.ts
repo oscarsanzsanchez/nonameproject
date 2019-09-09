@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
-import Service from '../models/service';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import Service from "../models/service";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +11,9 @@ export class ServicesService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get(`${this.BASEURL}`);
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append("auth", localStorage.getItem("token"));
+    return this.http.get(`${this.BASEURL}`, { headers: headers });
   }
 
   create(service: Service) {
@@ -19,6 +21,8 @@ export class ServicesService {
   }
 
   getCount() {
-    return this.http.get(`${this.BASEURL}/countpeople/all`);
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append("auth", localStorage.getItem("token"));
+    return this.http.get(`${this.BASEURL}/countpeople/all`, {headers: headers});
   }
 }

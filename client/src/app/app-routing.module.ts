@@ -3,28 +3,34 @@ import { Routes, RouterModule } from "@angular/router";
 import { ListPeopleComponent } from "./components/list-people/list-people.component";
 import { FormpeopleComponent } from "./components/formpeople/formpeople.component";
 import { FormservicesComponent } from "./components/formservices/formservices.component";
+import { AuthGuard } from "./auth.guard";
+import { LoginComponent } from "./components/login/login.component";
 
 const routes: Routes = [
+  {
+    path: "people",
+    component: ListPeopleComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "people/new",
+    component: FormpeopleComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "services/new",
+    component: FormservicesComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: "login", component: LoginComponent },
+  {
+    path: "people/:id",
+    component: FormpeopleComponent
+  },
   {
     path: "",
     redirectTo: "people",
     pathMatch: "full"
-  },
-  {
-    path: "people",
-    component: ListPeopleComponent
-  },
-  {
-    path: "people/new",
-    component: FormpeopleComponent
-  },
-  {
-    path: "services/new",
-    component: FormservicesComponent
-  },
-  {
-    path: "people/:id",
-    component: FormpeopleComponent
   }
 ];
 

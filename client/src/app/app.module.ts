@@ -10,8 +10,17 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { PeopleService } from "./services/people.service";
 import { FormpeopleComponent } from "./components/formpeople/formpeople.component";
-import { FormservicesComponent } from './components/formservices/formservices.component';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FormservicesComponent } from "./components/formservices/formservices.component";
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { LoginComponent } from "./components/login/login.component";
+//#############################################
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './services/auth.service';
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
+//#############################################
 
 @NgModule({
   declarations: [
@@ -19,10 +28,24 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     NavigationBarComponent,
     ListPeopleComponent,
     FormpeopleComponent,
-    FormservicesComponent
+    FormservicesComponent,
+    LoginComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, SweetAlert2Module.forRoot()],
-  providers: [PeopleService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    SweetAlert2Module.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:4000"],
+        blacklistedRoutes: ["localhost:4000/api/auth"]
+      }
+    })
+  ],
+  providers: [PeopleService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

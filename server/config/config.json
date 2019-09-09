@@ -2,5 +2,8 @@
     "dev": {
         "config_id": "development",
         "node_port": 3000
+    },
+    "security": {
+        "jwtSecret": "@QEGTUI"
     }
 }

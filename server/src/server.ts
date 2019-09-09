@@ -6,6 +6,7 @@ import morgan from "morgan";
 import { Connection, createConnection, getRepository } from "typeorm";
 import Person from "./database/models/person";
 import routing from "./routes/apiRoute";
+import helmet from "helmet";
 
 class Server {
   public app: Application;
@@ -28,6 +29,7 @@ class Server {
     this.app.set("port", process.env.PORT || this.port);
     this.app.use(morgan("dev"));
     this.app.use(cors());
+    this.app.use(helmet())
     this.app.use(bodyParser.json());
     this.app.use(express.urlencoded({ extended: false }));
   }
