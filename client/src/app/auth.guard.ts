@@ -12,10 +12,10 @@ import { AuthService } from './services/auth.service';
   providedIn: "root"
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private jwtHelper: JwtHelperService, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let token: string = localStorage.getItem("token");
-    if (this.authService.loggedIn && !this.jwtHelper.isTokenExpired(token)) {
+    if (this.authService.loggedIn &&  !this.authService.isTokenExpired) {
       return true;
     }
 

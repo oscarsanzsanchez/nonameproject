@@ -11,9 +11,7 @@ export class ServicesService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append("auth", localStorage.getItem("token"));
-    return this.http.get(`${this.BASEURL}`, { headers: headers });
+    return this.http.get(`${this.BASEURL}`);
   }
 
   create(service: Service) {
@@ -21,8 +19,6 @@ export class ServicesService {
   }
 
   getCount() {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append("auth", localStorage.getItem("token"));
-    return this.http.get(`${this.BASEURL}/countpeople/all`, {headers: headers});
+    return this.http.get(`${this.BASEURL}/countpeople/all`);
   }
 }

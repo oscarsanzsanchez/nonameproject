@@ -7,6 +7,8 @@ import { Connection, createConnection, getRepository } from "typeorm";
 import Person from "./database/models/person";
 import routing from "./routes/apiRoute";
 import helmet from "helmet";
+import fs from "fs";
+import https from "https";
 
 class Server {
   public app: Application;
@@ -29,9 +31,18 @@ class Server {
     this.app.set("port", process.env.PORT || this.port);
     this.app.use(morgan("dev"));
     this.app.use(cors());
-    this.app.use(helmet())
+    this.app.use(helmet());
     this.app.use(bodyParser.json());
     this.app.use(express.urlencoded({ extended: false }));
+  }
+
+  private certificates() {
+    const httpsOptions = {
+      key: fs.readFileSync("certificates/key.pem"),
+      cert: fs.readFileSync("certificates/cert.pem")
+    };
+
+    return httpsOptions;
   }
 
   private routes(): void {
@@ -39,16 +50,19 @@ class Server {
   }
 
   public start(): void {
-    this.app.listen(this.app.get("port"), () => {
-      console.log(
-        `\n\n\tServer running and listening on port ${this.app.get("port")}.\n`
-          .white.bgGreen.bold + "\n"
-      );
-      console.log(
-        `\n\n\tServer running under "${this.enviroment}" mode\n`.white.bgBlue
-          .bold + "\n"
-      );
-    });
+    https
+      .createServer(this.certificates(), this.app)
+      .listen(this.app.get("port"), () => {
+        console.log(
+          `\n\n\tServer running and listening on port ${this.app.get(
+            "port"
+          )}.\n`.white.bgGreen.bold + "\n"
+        );
+        console.log(
+          `\n\n\tServer running under "${this.enviroment}" mode\n`.white.bgBlue
+            .bold + "\n"
+        );
+      });
   }
 
   private async openConnection() {
@@ -59,21 +73,6 @@ class Server {
       console.log("Connected successfully to database".black.bgWhite);
       this.connection = connection;
       // this.pruebas();
-    }
-  }
-
-  private async pruebas() {
-    try {
-      console.log("empieza");
-      const rp = getRepository(Person);
-      console.log("empieza2");
-      const resultado = await rp.find({
-        //relations: ["person"]
-      });
-      console.log(resultado);
-      //console.log(resultado[0].person);
-    } catch (error) {
-      console.log(error);
     }
   }
 }

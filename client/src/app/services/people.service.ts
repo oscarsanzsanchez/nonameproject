@@ -12,9 +12,7 @@ export class PeopleService {
   }
 
   getAll() {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append("auth", localStorage.getItem("token"));
-    return this.http.get(`${this.BASEURL}`, { headers: headers });
+    return this.http.get(`${this.BASEURL}`);
   }
 
   getOne(id) {

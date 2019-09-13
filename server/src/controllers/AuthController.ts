@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 
 import { User } from "../database/models/user";
 import config from "../../config/config.json";
+import UserController from "./UserController";
 
 class AuthController {
   static login = async (req: Request, res: Response) => {
@@ -82,5 +83,9 @@ class AuthController {
 
     res.status(204).send();
   };
+
+  static register = async (req: Request, res: Response) => {
+    UserController.newUser(req, res);
+  }
 }
 export default AuthController;

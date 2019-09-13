@@ -5,6 +5,7 @@ import { FormpeopleComponent } from "./components/formpeople/formpeople.componen
 import { FormservicesComponent } from "./components/formservices/formservices.component";
 import { AuthGuard } from "./auth.guard";
 import { LoginComponent } from "./components/login/login.component";
+import { RegisterComponent } from "./components/register/register.component";
 
 const routes: Routes = [
   {
@@ -22,14 +23,18 @@ const routes: Routes = [
     component: FormservicesComponent,
     canActivate: [AuthGuard]
   },
-  { path: "login", component: LoginComponent },
+  { path: "login",component: LoginComponent },
   {
     path: "people/:id",
     component: FormpeopleComponent
   },
   {
+    path: "register",
+    component: RegisterComponent
+  },
+  {
     path: "",
-    redirectTo: "people",
+    redirectTo: "login",
     pathMatch: "full"
   }
 ];
