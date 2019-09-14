@@ -7,7 +7,7 @@ import { NavigationBarComponent } from "./components/navigation-bar/navigation-b
 import { ListPeopleComponent } from "./components/list-people/list-people.component";
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PeopleService } from "./services/people.service";
 import { FormpeopleComponent } from "./components/formpeople/formpeople.component";
 import { FormservicesComponent } from "./components/formservices/formservices.component";
@@ -48,7 +48,8 @@ export function tokenGetter() {
         whitelistedDomains: ["localhost:4000"],
         blacklistedRoutes: ["localhost:4000/api/auth"]
       }
-    })
+    }),
+    ReactiveFormsModule
   ],
   providers: [
     PeopleService,

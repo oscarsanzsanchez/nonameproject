@@ -85,7 +85,12 @@ class AuthController {
   };
 
   static register = async (req: Request, res: Response) => {
-    UserController.newUser(req, res);
+      try {
+        UserController.newUser(req, res);
+        res.status(201).send();
+      } catch (error) {
+        res.status(400).send(error);
+      }
   }
 }
 export default AuthController;

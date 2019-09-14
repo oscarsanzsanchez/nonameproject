@@ -1,14 +1,11 @@
-import colors from "colors";
 import * as bodyParser from "body-parser";
+import colors from "colors";
 import cors from "cors";
 import express, { Application } from "express";
-import morgan from "morgan";
-import { Connection, createConnection, getRepository } from "typeorm";
-import Person from "./database/models/person";
-import routing from "./routes/apiRoute";
 import helmet from "helmet";
-import fs from "fs";
-import https from "https";
+import morgan from "morgan";
+import { Connection, createConnection } from "typeorm";
+import routing from "./routes/apiRoute";
 
 class Server {
   public app: Application;
@@ -36,22 +33,12 @@ class Server {
     this.app.use(express.urlencoded({ extended: false }));
   }
 
-  private certificates() {
-    const httpsOptions = {
-      key: fs.readFileSync("certificates/key.pem"),
-      cert: fs.readFileSync("certificates/cert.pem")
-    };
-
-    return httpsOptions;
-  }
-
   private routes(): void {
     this.app.use("/api", routing);
   }
 
   public start(): void {
-    https
-      .createServer(this.certificates(), this.app)
+    this.app
       .listen(this.app.get("port"), () => {
         console.log(
           `\n\n\tServer running and listening on port ${this.app.get(

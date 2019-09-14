@@ -28,13 +28,18 @@ export class LoginComponent implements OnInit {
   ) {}
 
   public submit() {
-    this.auth
+    if (this.username && this.password) {
+      this.error = null;
+      this.auth
       .login(this.username, this.password)
       .pipe(first())
       .subscribe(
         result => this.router.navigate(["/people"]),
         err => (this.error = "Could not authenticate")
       );
+    }else {
+      this.error = "Error";
+    }
   }
 
   ngOnInit() {
